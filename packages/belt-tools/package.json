@@ -1,0 +1,12 @@
+{
+  "name": "belt-tools",
+  "version": "0.0.0",
+  "description": "convinience tools for belt",
+  "main": "index.js",
+  "dependencies": {
+    "any-shell-escape": "^0.1.1",
+    "chalk": "^2.3.2",
+    "execa": "^0.10.0",
+    "opn": "^5.3.0"
+  }
+}
