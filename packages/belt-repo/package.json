@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "repo module for belt",
   "main": "cli.js",
+  "author": "ewnd9 <ewndnine@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/ewnd9/belt/tree/master/packages/belt-repo",
   "belt": {
     "commands": {
       "repo:open": {
@@ -12,6 +15,7 @@
     }
   },
   "dependencies": {
-    "git-url-parse": "^8.2.0"
+    "git-url-parse": "^8.2.0",
+    "belt-tools": "0.0.1"
   }
 }

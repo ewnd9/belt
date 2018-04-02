@@ -6,6 +6,10 @@
   "bin": {
     "belt": "cli.js"
   },
+  "preferGlobal": true,
+  "author": "ewnd9 <ewndnine@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/ewnd9/belt/tree/master/packages/belt-cli",
   "dependencies": {
     "configstore": "^3.1.2",
     "minimist": "^1.2.0"
