@@ -7,7 +7,7 @@ Inspired by http://www.drinchev.com/blog/ssh-and-terminal-background/#configurin
 ```js
 if (process.env.TMUX) {
   await execa('tmux', ['select-pane', '-P', 'bg=#350000']);
-  await delay(2000);
+  await execa('ssh', ['user@ip'], { stdio: 'inherit' });
   await execa('tmux', ['select-pane', '-P', 'bg=default']);
 } else {
   console.log('outside of tmux');
