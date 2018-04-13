@@ -1,6 +1,6 @@
 {
   "name": "belt-tools",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "convinience tools for belt",
   "main": "index.js",
   "author": "ewnd9 <ewndnine@gmail.com>",
