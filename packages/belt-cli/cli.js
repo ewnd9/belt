@@ -34,10 +34,35 @@ async function run({ argv }) {
 }
 
 function printList() {
+  const groupBy = require('lodash.groupby');
+  const sortBy = require('lodash.sortby');
   const commands = getCommands();
+
+  const groups = Object.entries(groupBy(Object.entries(commands), ([command]) => {
+    const parts = command.split(':');
+    return parts.length === 1 ? '_' : parts[0];
+  }));
+
+  const noPrefix = groups.find(_ => _[0] === '_') || ['_', []];
+  const prefixed = sortBy(groups.filter(_ => _[0] !== '_'), '[0]');
+
   console.log();
-  Object.entries(commands).forEach(([command, info]) => {
+  noPrefix[1].forEach(([command, info]) => {
     console.log(`- ${command} (${info.description})`);
+  });
+
+  let prevLength = noPrefix[1].length;
+
+  prefixed.forEach(([, commands]) => {
+    if (prevLength > 1) {
+      console.log();
+    }
+
+    commands.forEach(([command, info]) => {
+      console.log(`- ${command} (${info.description})`);
+    });
+
+    prevLength = commands.length;
   });
 }
 

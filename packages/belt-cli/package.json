@@ -12,6 +12,8 @@
   "repository": "https://github.com/ewnd9/belt/tree/master/packages/belt-cli",
   "dependencies": {
     "configstore": "^3.1.2",
+    "lodash.groupby": "^4.6.0",
+    "lodash.sortby": "^4.7.0",
     "minimist": "^1.2.0"
   }
 }
