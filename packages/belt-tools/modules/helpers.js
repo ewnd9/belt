@@ -8,5 +8,5 @@ module.exports = {
 };
 
 function log(args) {
-  console.log(`${chalk.green('$')} ${shellEscape(args)}`);
+  console.log(chalk.grey(`$ ${shellEscape(args)}`));
 }
