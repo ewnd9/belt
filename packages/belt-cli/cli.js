@@ -47,7 +47,7 @@ function printList() {
   const prefixed = sortBy(groups.filter(_ => _[0] !== '_'), '[0]');
 
   console.log();
-  noPrefix[1].forEach(([command, info]) => {
+  sortBy(noPrefix[1], '[0]').forEach(([command, info]) => {
     console.log(`- ${command} (${info.description})`);
   });
 
@@ -58,7 +58,7 @@ function printList() {
       console.log();
     }
 
-    commands.forEach(([command, info]) => {
+    sortBy(commands, '[0]').forEach(([command, info]) => {
       console.log(`- ${command} (${info.description})`);
     });
 
