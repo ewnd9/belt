@@ -11,6 +11,10 @@
       "repo:open": {
         "script": "commands/repo-open",
         "description": "open repo in a browser"
+      },
+      "repo:open-commit": {
+        "script": "commands/repo-open-commit",
+        "description": "open current HEAD in a browser"
       }
     }
   },
