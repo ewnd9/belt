@@ -4,9 +4,14 @@ const shellEscape = require('any-shell-escape');
 const chalk = require('chalk');
 
 module.exports = {
-  log
+  log,
+  logShell
 };
 
-function log(args) {
-  console.error(chalk.grey(`$ ${shellEscape(args)}`));
+function log(str) {
+  console.error(chalk.grey(str));
+}
+
+function logShell(args) {
+  log(`$ ${shellEscape(args)}`);
 }
