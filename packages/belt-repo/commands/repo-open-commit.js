@@ -10,7 +10,7 @@ module.exports = {
 };
 
 async function run({ argv }) {
-  const remoteUrl = await execa.stdout('git', ['remote', 'get-url', 'origin']);
+  const remoteUrl = await execa.stdout('git', ['remote', 'get-url', argv.origin || 'origin']);
   const hash = await execa.stdout('git', ['rev-parse', argv._[0] || 'HEAD']);
 
   const { resource, owner, name } = gitUrlParse(remoteUrl);
