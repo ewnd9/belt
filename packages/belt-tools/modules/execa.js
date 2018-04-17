@@ -1,7 +1,7 @@
 'use strict';
 
 const execa = require('execa');
-const { logShell } = require('./log');
+const { log, logShell } = require('./log');
 
 module.exports = execaProxy;
 
@@ -22,7 +22,7 @@ execaProxy.stderr = function(cmd, args, opts) {
 };
 
 execaProxy.shell = function(cmd, opts) {
-  logShell([cmd]);
+  log(`$ ${cmd}`);
   return execa.shell(cmd, opts);
 };
 
@@ -32,6 +32,6 @@ execaProxy.sync = function(cmd, args, opts) {
 };
 
 execaProxy.shellSync = function(cmd, opts) {
-  logShell([cmd]);
+  log(`$ ${cmd}`);
   return execa.shellSync(cmd, opts);
 };
