@@ -1,7 +1,7 @@
 'use strict';
 
 const opn = require('opn');
-const { log } = require('./helpers');
+const { log } = require('./log');
 
 module.exports = opnProxy;
 

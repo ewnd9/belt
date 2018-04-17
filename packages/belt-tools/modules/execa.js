@@ -1,7 +1,7 @@
 'use strict';
 
 const execa = require('execa');
-const { log } = require('./helpers');
+const { log } = require('./log');
 
 module.exports = execaProxy;
 
