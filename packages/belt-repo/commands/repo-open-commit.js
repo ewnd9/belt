@@ -16,10 +16,10 @@ async function run({ argv }) {
   const { resource, owner, name } = gitUrlParse(remoteUrl);
   let url;
 
-  if (resource.includes('github') || resource.includes('gitlab')) {
-    url = `http://${resource}/${owner}/${name}/commit/${hash}`;
-  } else if (resource.includes('bitbucket') || resource.includes('jira')) {
+  if (resource.includes('bitbucket') || resource.includes('jira')) {
     url = `http://${resource}/${owner}/${name}/commits/${hash}`;
+  } else {
+    url = `http://${resource}/${owner}/${name}/commit/${hash}`; // github, gitlab, hopefully all the others
   }
 
   opn(url);
