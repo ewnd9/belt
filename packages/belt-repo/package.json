@@ -8,6 +8,10 @@
   "repository": "https://github.com/ewnd9/belt/tree/master/packages/belt-repo",
   "belt": {
     "commands": {
+      "repo:belt-command": {
+        "script": "commands/repo-belt-command",
+        "description": "create new command for cwd package.json"
+      },
       "repo:open": {
         "script": "commands/repo-open",
         "description": "open repo in a browser"
