@@ -1,6 +1,6 @@
 # belt-monorepo
 
-Minimalistic extendable CLI script runner, inspired by [`oclif`](https://github.com/oclif/oclif)
+Global CLI scripts registry, inspired by [`oclif`](https://github.com/oclif/oclif)
 
 ## Packages
 

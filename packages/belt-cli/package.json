@@ -1,7 +1,7 @@
 {
   "name": "belt-cli",
   "version": "0.0.3",
-  "description": "Minimalistic extendable CLI script runner",
+  "description": "Global CLI scripts registry",
   "main": "cli.js",
   "bin": {
     "belt": "cli.js"
