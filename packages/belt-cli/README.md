@@ -6,14 +6,23 @@ Minimalistic extendable CLI script runner, inspired by [`oclif`](https://github.
 
 ```sh
 $ npm install --global belt-cli
+# or
 $ yarn global add belt-cli
 ```
 
 ## Usage
 
 ```sh
-$ belt --install path/to/module
-$ belt --list
+# uses npm programmatically underhood, see https://docs.npmjs.com/cli/install
+$ belt install <name>
+$ belt install @<scope>/<name> # scoped from npm
+$ belt install <user>/<name> # from github
+$ belt install git+ssh://git@gitlab.com:<user>/<name>.git # from any git repo by ssh
+$ belt install git+https://github.com/<user>/<name>.git # from any git repo by https
+
+$ belt link local/path/to/module
+
+$ belt list
 $ belt <command> <args>
 ```
 

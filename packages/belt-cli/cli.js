@@ -4,20 +4,23 @@
 
 const path = require('path');
 const fs = require('fs');
+const chalk = require('chalk');
 const Configstore = require('configstore');
 
 // ~/.config/configstore/belt-cli.json
 const conf = new Configstore('belt-cli', { modules: [] });
 const argv = require('minimist')(process.argv.slice(2), { string: '_' });
 
-if (argv.install) {
-  install({ modulePath: argv.install });
-} else if (argv.list) {
-  printList();
+if (argv._[0] === 'install') {
+  install({ name: argv._[1] });
+} else if (argv._[0] === 'link') {
+  link({ modulePath: argv._[1] });
+} else if (argv._[0] === 'list') {
+  printHelp();
 } else if (argv._.length > 0) {
   run({ argv });
 } else {
-  printList();
+  printHelp();
 }
 
 async function run({ argv }) {
@@ -33,7 +36,7 @@ async function run({ argv }) {
   await mod.run({ argv });
 }
 
-function printList() {
+function printHelp() {
   const groupBy = require('lodash.groupby');
   const sortBy = require('lodash.sortby');
   const commands = getCommands();
@@ -46,7 +49,8 @@ function printList() {
   const noPrefix = groups.find(_ => _[0] === '_') || ['_', []];
   const prefixed = sortBy(groups.filter(_ => _[0] !== '_'), '[0]');
 
-  console.log();
+  console.log(`\nconfig: ${conf.path}\n`);
+
   sortBy(noPrefix[1], '[0]').forEach(([command, info]) => {
     console.log(`- ${command} (${info.description})`);
   });
@@ -66,10 +70,41 @@ function printList() {
   });
 }
 
-function install({ modulePath }) {
+async function install({ name }) {
+  const envPaths = require('env-paths');
+  const makeDir = require('make-dir');
+  const npm = require('global-npm');
+  const { promisify: pify } = require('util');
+
+  const paths = envPaths('belt-cli');
+  const modulesDir = `${paths.data}/dependencies`;
+
+  if (!fs.existsSync(modulesDir)) {
+    makeDir.sync(modulesDir);
+    fs.writeFileSync(`${modulesDir}/package.json`, JSON.stringify({
+      name: 'belt-dependencies',
+      private: true,
+      description: 'programmatically installed dependencies (github.com/ewnd9/belt)'
+    }, null, 2));
+  }
+
+  await pify(npm.load)();
+  const installer = new npm.commands.install.Installer(modulesDir, false, [name]);
+  await installer.run();
+
+  installer.args.forEach(({ name }) => {
+    const pkgPath = `${modulesDir}/node_modules/${name}/package.json`;
+    appendToRegistry(pkgPath);
+  });
+}
+
+function link({ modulePath }) {
   const absolutePath = path.resolve(modulePath);
   const pkgPath = `${absolutePath}/package.json`;
+  appendToRegistry(pkgPath);
+}
 
+function appendToRegistry(pkgPath) {
   if (!fs.existsSync(pkgPath)) {
     console.error(`${pkgPath} doesn't exist`);
     process.exit(1);
@@ -77,11 +112,17 @@ function install({ modulePath }) {
 
   const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
   if (!pkg.belt || !pkg.belt.commands) {
-    console.error(`"belt.commands" is missing in ${pkgPath}`);
+    console.error(chalk.red(`"belt.commands" is missing in ${pkgPath}`));
     process.exit(1);
   }
 
-  conf.set('modules', conf.get('modules').concat(pkgPath));
+  const modules = conf.get('modules');
+
+  if (modules.indexOf(pkgPath) > -1) {
+    console.warn(chalk.grey(`"${pkgPath}" is already in registry`));
+  } else {
+    conf.set('modules', modules.concat(pkgPath));
+  }
 }
 
 function getCommands() {

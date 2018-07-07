@@ -6,7 +6,7 @@
 $ npm install --global belt-repo
 $ yarn global add belt-repo
 
-$ belt --install $(node -pe "require('path').dirname(require.resolve('belt-repo/package.json'))")
+$ belt install belt-repo
 ```
 
 ## License
