@@ -32,8 +32,42 @@ async function run({ argv }) {
   }
 
   argv._.splice(0, 1);
+
+  const ctx = {
+    argv,
+    command,
+    async ensureCredentials(cmdKey, params) {
+      const prompts = require('prompts');
+      const Configstore = require('configstore');
+
+      const conf = new Configstore('belt-cli');
+      const result = {};
+
+      for (const [k, v] of Object.entries(params)) {
+        const key = `${cmdKey}.${k}`;
+        const ret  = conf.get(key);
+
+        if (ret !== undefined) {
+          result[k] = ret;
+          continue;
+        }
+
+        const response = await prompts({
+          type: v.type || 'text',
+          name: 'value',
+          message: v.description || k
+        });
+
+        result[k] = response.value;
+        conf.set(key, response.value);
+      }
+
+      return result;
+    }
+  };
+
   const mod = require(command.scriptPath);
-  await mod.run({ argv });
+  await mod.run(ctx);
 }
 
 function printHelp() {
@@ -134,6 +168,10 @@ function getCommands() {
     Object.entries(pkg.belt.commands).map(([name, info]) => {
       const scriptPath = `${path.dirname(pkgPath)}/${info.script}`;
       commands[name] = {
+        name,
+        pkg,
+        pkgName: pkg.name,
+        pkgPath,
         scriptPath,
         description: info.description || '<no-description>'
       }
