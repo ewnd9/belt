@@ -8,7 +8,10 @@ const chalk = require('chalk');
 const Configstore = require('configstore');
 
 // ~/.config/configstore/belt-cli.json
-const conf = new Configstore('belt-cli', { modules: [] });
+const confMain = new Configstore('belt-cli', { modules: [] });
+// ~/.config/configstore/belt-cli-config.json
+const confData = new Configstore('belt-cli-config');
+
 const argv = require('minimist')(process.argv.slice(2), { string: '_' });
 
 if (argv._[0] === 'install') {
@@ -36,16 +39,13 @@ async function run({ argv }) {
   const ctx = {
     argv,
     command,
-    async ensureCredentials(cmdKey, params) {
+    async ensureConfig(cmdKey, params) {
       const prompts = require('prompts');
-      const Configstore = require('configstore');
-
-      const conf = new Configstore('belt-cli');
       const result = {};
 
       for (const [k, v] of Object.entries(params)) {
         const key = `${cmdKey}.${k}`;
-        const ret  = conf.get(key);
+        const ret  = confData.get(key);
 
         if (ret !== undefined) {
           result[k] = ret;
@@ -59,7 +59,7 @@ async function run({ argv }) {
         });
 
         result[k] = response.value;
-        conf.set(key, response.value);
+        confData.set(key, response.value);
       }
 
       return result;
@@ -83,7 +83,7 @@ function printHelp() {
   const noPrefix = groups.find(_ => _[0] === '_') || ['_', []];
   const prefixed = sortBy(groups.filter(_ => _[0] !== '_'), '[0]');
 
-  console.log(`\nconfig: ${conf.path}\n`);
+  console.log(`\nmain config: ${confMain.path}\ndata config: ${confData.path}\n`);
 
   sortBy(noPrefix[1], '[0]').forEach(([command, info]) => {
     console.log(`- ${command} (${info.description})`);
@@ -150,19 +150,19 @@ function appendToRegistry(pkgPath) {
     process.exit(1);
   }
 
-  const modules = conf.get('modules');
+  const modules = confMain.get('modules');
 
   if (modules.indexOf(pkgPath) > -1) {
     console.warn(chalk.grey(`"${pkgPath}" is already in registry`));
   } else {
-    conf.set('modules', modules.concat(pkgPath));
+    confMain.set('modules', modules.concat(pkgPath));
   }
 }
 
 function getCommands() {
   const commands = {};
 
-  for (const pkgPath of conf.get('modules')) {
+  for (const pkgPath of confMain.get('modules')) {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
 
     Object.entries(pkg.belt.commands).map(([name, info]) => {
