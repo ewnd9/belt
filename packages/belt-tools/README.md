@@ -5,17 +5,18 @@ Convinience wrappers for scripts with logging
 ## Install
 
 ```sh
-$ npm install belt-tools
-$ yarn add
+$ npm install @belt/tools
+# or
+$ yarn add @belt/tools
 ```
 
 ## Usage
 
 ```js
-const { execa, opn } = require('belt-tools');
+const { execa, opn } = require('@belt/tools');
 // or
-const execa = require('belt-tools/modules/execa');
-const opn = require('belt-tools/modules/opn');
+const execa = require('@belt/tools/modules/execa');
+const opn = require('@belt/tools/modules/opn');
 
 execa('echo', ['hello world']);
 // prints "$ echo 'hello world'"

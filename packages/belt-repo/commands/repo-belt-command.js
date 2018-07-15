@@ -34,7 +34,7 @@ async function run({ argv }) {
   fs.writeFileSync(`commands/${name}.js`, dedent`
     'use strict';
 
-    const execa = require('belt-tools/modules/execa');
+    const execa = require('@belt/tools/modules/execa');
 
     module.exports = {
       run

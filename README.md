@@ -4,9 +4,9 @@ Global CLI scripts registry, inspired by [`oclif`](https://github.com/oclif/ocli
 
 ## Packages
 
-- [belt-cli](packages/belt-cli)
-- [belt-tools](packages/belt-tools)
-- [belt-repo](packages/belt-repo)
+- [@belt/cli](packages/belt-cli)
+- [@belt/tools](packages/belt-tools)
+- [@belt/repo](packages/belt-repo)
 
 ## License
 

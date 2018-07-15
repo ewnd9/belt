@@ -3,10 +3,7 @@
 ## Install
 
 ```sh
-$ npm install --global belt-repo
-$ yarn global add belt-repo
-
-$ belt install belt-repo
+$ belt install @belt/repo
 ```
 
 ## License

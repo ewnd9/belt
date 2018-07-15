@@ -1,5 +1,5 @@
 {
-  "name": "belt-tools",
+  "name": "@belt/tools",
   "version": "0.0.5",
   "description": "convinience tools for belt",
   "main": "index.js",

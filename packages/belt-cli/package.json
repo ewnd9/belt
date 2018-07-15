@@ -1,5 +1,5 @@
 {
-  "name": "belt-cli",
+  "name": "@belt/cli",
   "version": "0.1.2",
   "description": "Global CLI scripts registry",
   "main": "cli.js",

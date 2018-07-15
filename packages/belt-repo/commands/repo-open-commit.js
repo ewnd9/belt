@@ -1,7 +1,7 @@
 'use strict';
 
-const execa = require('belt-tools/modules/execa');
-const opn = require('belt-tools/modules/opn');
+const execa = require('@belt/tools/modules/execa');
+const opn = require('@belt/tools/modules/opn');
 
 const gitUrlParse = require('git-url-parse');
 

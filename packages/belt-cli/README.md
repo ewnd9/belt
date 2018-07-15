@@ -5,9 +5,9 @@ Global CLI scripts registry, inspired by [`oclif`](https://github.com/oclif/ocli
 ## Install
 
 ```sh
-$ npm install --global belt-cli
+$ npm install --global @belt/cli
 # or
-$ yarn global add belt-cli
+$ yarn global add @belt/cli
 ```
 
 ## Usage

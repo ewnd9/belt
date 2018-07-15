@@ -1,5 +1,5 @@
 {
-  "name": "belt-repo",
+  "name": "@belt/repo",
   "version": "0.1.0",
   "description": "repo module for belt",
   "main": "cli.js",
@@ -23,7 +23,7 @@
     }
   },
   "dependencies": {
-    "belt-tools": "^0.0.5",
+    "@belt/tools": "^0.0.5",
     "git-url-parse": "^8.2.0"
   }
 }
