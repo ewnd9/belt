@@ -1,6 +1,6 @@
 {
   "name": "@belt/tools",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "convinience tools for belt",
   "main": "index.js",
   "author": "ewnd9 <ewndnine@gmail.com>",
