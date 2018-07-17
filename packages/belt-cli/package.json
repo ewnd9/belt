@@ -11,6 +11,7 @@
   "license": "MIT",
   "repository": "https://github.com/ewnd9/belt/tree/master/packages/belt-cli",
   "dependencies": {
+    "chalk": "^2.4.1",
     "configstore": "^3.1.2",
     "env-paths": "^1.0.0",
     "global-npm": "^0.3.0",
