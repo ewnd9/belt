@@ -19,12 +19,18 @@
       "repo:open-commit": {
         "script": "commands/repo-open-commit",
         "description": "open current HEAD in a browser"
+      },
+      "repo:clone": {
+        "script": "commands/repo-clone",
+        "description": "clone with wildcard"
       }
     }
   },
   "dependencies": {
     "@belt/tools": "^0.0.6",
     "dedent": "^0.7.0",
-    "git-url-parse": "^8.2.0"
+    "git-url-parse": "^8.2.0",
+    "gitlab": "^14.1.1",
+    "minimatch": "^3.0.4"
   }
 }
