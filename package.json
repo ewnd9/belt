@@ -7,7 +7,7 @@
   "devDependencies": {
     "babel-eslint": "^8.2.2",
     "eslint": "^4.19.1",
-    "lerna": "^2.9.0"
+    "lerna": "^3.20.2"
   },
   "scripts": {
     "lint": "eslint 'packages/**/*.js'"
