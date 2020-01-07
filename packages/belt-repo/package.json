@@ -1,6 +1,6 @@
 {
   "name": "@belt/repo",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "repo module for belt",
   "main": "cli.js",
   "author": "ewnd9 <ewndnine@gmail.com>",
