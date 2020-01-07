@@ -5,6 +5,7 @@ const path = require('path');
 const gitUrlParse = require('git-url-parse');
 
 const Gitlab = require('../providers/gitlab-provider');
+const Github = require('../providers/github-provider');
 
 module.exports = {
   run
@@ -29,10 +30,13 @@ async function run({ argv: { _: queries, output, schema = 'ssh', depth }, ensure
   );
 
   for (const project of projects) {
-    const provider = await getProvider(project.web_url);
+    const url = project.web_url || project.clone_url;
+    const provider = await getProvider(url);
+    const { resource } = gitUrlParse(url);
+
     await provider.cloneProject({
       project,
-      output: rootDir,
+      output: `${rootDir}/${resource}`,
       schema,
       depth
     });
@@ -51,6 +55,8 @@ async function run({ argv: { _: queries, output, schema = 'ssh', depth }, ensure
 
     if (resource.includes('gitlab')) {
       return Gitlab.getProviderByHostname({ host: resource, token });
+    } else if (resource.includes('github')) {
+      return Github.getProviderByHostname({ host: resource, token });
     } else {
       throw new Error(`Unknown resource: "${resource}"`);
     }
