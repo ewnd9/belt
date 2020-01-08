@@ -34,7 +34,7 @@ async function run({ argv: { _: queries, output, schema = 'ssh', depth, manifest
   }
 
   for (const project of projects) {
-    const url = project.web_url || project.clone_url;
+    const url = project.httpsUrl;
     const provider = await getProvider(url);
     const { resource } = gitUrlParse(url);
 
