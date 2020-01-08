@@ -1,11 +1,9 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
 const minimatch = require('minimatch');
-const makeDir = require('make-dir');
 const Octokit = require('@octokit/rest');
-const execa = require('@belt/tools/modules/execa');
+
+const { AbstractProvider } = require('./abstract-provider');
 
 const map = {};
 
@@ -26,8 +24,9 @@ function getProviderByHostname({ host, token }) {
   return map[host];
 }
 
-class GithubProvider {
+class GithubProvider extends AbstractProvider {
   constructor(api) {
+    super();
     this.api = api;
   }
 
@@ -42,31 +41,16 @@ class GithubProvider {
       projects.push(...(await this._getAllOrgProjects(parts[0])));
     }
 
-    return projects.filter(project =>
-      minimatch(project.full_name, `${owner}/${name}`)
-    );
-  }
-
-  async cloneProject({ project, output, schema, depth }) {
-    const name = project.full_name;
-    const repoFsPath = `${output}/${name}`;
-
-    if (fs.existsSync(repoFsPath)) {
-      return;
-    }
-
-    await makeDir(path.dirname(repoFsPath));
-    const cloneUrl = schema === 'ssh' ? project.ssh_url : project.clone_url;
-
-    const args = ['clone', cloneUrl, repoFsPath];
-
-    if (depth) {
-      args.push('--depth', depth);
-    }
-
-    await execa('git', args, {
-      stdio: 'inherit'
-    });
+    return projects
+      .filter(project => minimatch(project.full_name, `${owner}/${name}`))
+      .map(project => ({
+        id: project.id,
+        name: project.name,
+        fullName: project.full_name,
+        httpsUrl: project.clone_url,
+        sshUrl: project.ssh_url,
+        fork: project.fork,
+      }));
   }
 
   async _getAllOrgProjects(org) {

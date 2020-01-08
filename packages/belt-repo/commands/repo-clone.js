@@ -11,7 +11,7 @@ module.exports = {
   run
 };
 
-async function run({ argv: { _: queries, output, schema = 'ssh', depth }, ensureConfig }) {
+async function run({ argv: { _: queries, output, schema = 'ssh', depth, manifest }, ensureConfig }) {
   // if (argv._.length !== 2) {
   //   throw new Error(`Usage: $ belt repo:belt-command <namespace>:<name> '<description>'`);
   // }
@@ -26,8 +26,12 @@ async function run({ argv: { _: queries, output, schema = 'ssh', depth }, ensure
 
   fs.writeFileSync(
     'manifest.json',
-    JSON.stringify({ queries, schema, depth, output, projects })
+    JSON.stringify({ queries, schema, depth, output, projects }, null, 2)
   );
+
+  if (manifest) {
+    return;
+  }
 
   for (const project of projects) {
     const url = project.web_url || project.clone_url;

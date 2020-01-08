@@ -1,19 +1,16 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
 const minimatch = require('minimatch');
-const makeDir = require('make-dir');
 const { Gitlab } = require('gitlab');
-const execa = require('@belt/tools/modules/execa');
 
+const { AbstractProvider } = require('./abstract-provider');
 const map = {};
 
 module.exports = {
-  getProviderByHostname,
+  getProviderByHostname
 };
 
-function getProviderByHostname({host, token}) {
+function getProviderByHostname({ host, token }) {
   if (!map[host]) {
     const api = new Gitlab({
       host: `https://${host}`,
@@ -26,8 +23,9 @@ function getProviderByHostname({host, token}) {
   return map[host];
 }
 
-class GitlabProvider {
+class GitlabProvider extends AbstractProvider {
   constructor(api) {
+    super();
     this.api = api;
   }
 
@@ -35,12 +33,21 @@ class GitlabProvider {
     const parts = owner.split('/');
     const projects = [
       ...(await this.getAllProjectsByGroup(parts[0])),
-      ...(await this.getAllProjectsByUser(parts[0])),
+      ...(await this.getAllProjectsByUser(parts[0]))
     ];
 
-    return projects.filter(project =>
-      minimatch(project.path_with_namespace, `${owner}/${name}`)
-    );
+    return projects
+      .filter(project =>
+        minimatch(project.path_with_namespace, `${owner}/${name}`)
+      )
+      .map(project => ({
+        id: project.id,
+        name: project.name,
+        fullName: project.path_with_namespace,
+        httpsUrl: project.http_url_to_repo,
+        sshUrl: project.ssh_url_to_repo,
+        fork: !!project.forked_from_project
+      }));
   }
 
   async getAllProjectsByGroup(search) {
@@ -64,29 +71,6 @@ class GitlabProvider {
     }
 
     return this._getAllUserProjects(user);
-  }
-
-  async cloneProject({ project, output, schema, depth }) {
-    const name = project.path_with_namespace;
-    const repoFsPath = `${output}/${name}`;
-
-    if (fs.existsSync(repoFsPath)) {
-      return;
-    }
-
-    await makeDir(path.dirname(repoFsPath));
-    const cloneUrl =
-      schema === 'ssh' ? project.ssh_url_to_repo : project.http_url_to_repo;
-
-    const args = ['clone', cloneUrl, repoFsPath];
-
-    if (depth) {
-      args.push('--depth', depth);
-    }
-
-    await execa('git', args, {
-      stdio: 'inherit'
-    });
   }
 
   async _getAllNestedGroups(parentId, result = []) {
@@ -115,5 +99,4 @@ class GitlabProvider {
 
     return result;
   }
-};
-
+}
