@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/ewnd9/belt/tree/master/packages/belt-repo/compare/@belt/repo@0.2.0...@belt/repo@0.3.0) (2020-01-08)
+
+
+### Features
+
+* **belt-repo/clone:** unify providers output ([6d6d497](https://github.com/ewnd9/belt/tree/master/packages/belt-repo/commit/6d6d4973a08987045088ee7c096247ae7c82a9c7))
+
+
+
+
+
 # [0.2.0](https://github.com/ewnd9/belt/tree/master/packages/belt-repo/compare/@belt/repo@0.1.2...@belt/repo@0.2.0) (2020-01-07)
 
 
