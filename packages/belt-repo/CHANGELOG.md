@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/ewnd9/belt/tree/master/packages/belt-repo/compare/@belt/repo@0.3.0...@belt/repo@0.3.1) (2020-01-08)
+
+
+### Bug Fixes
+
+* **belt-repo/clone:** update old property name ([7a4da77](https://github.com/ewnd9/belt/tree/master/packages/belt-repo/commit/7a4da778e996a047bbde7fcb7ce08fc2d6bd04de))
+
+
+
+
+
 # [0.3.0](https://github.com/ewnd9/belt/tree/master/packages/belt-repo/compare/@belt/repo@0.2.0...@belt/repo@0.3.0) (2020-01-08)
 
 
