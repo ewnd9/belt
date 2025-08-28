@@ -4,11 +4,7 @@ Convinience wrappers for scripts with logging
 
 ## Install
 
-```sh
-$ npm install @belt/tools
-# or
-$ yarn add @belt/tools
-```
+The `@belt/tools` package was manually unpublished from npm on 2025-08-28. The name has been released for potential future use.
 
 ## Usage
 

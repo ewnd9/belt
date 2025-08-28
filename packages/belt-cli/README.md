@@ -4,11 +4,7 @@ Global CLI scripts registry, inspired by [`oclif`](https://github.com/oclif/ocli
 
 ## Install
 
-```sh
-$ npm install --global @belt/cli
-# or
-$ yarn global add @belt/cli
-```
+The `@belt/cli` package was manually unpublished from npm on 2025-08-28. The name has been released for potential future use.
 
 ## Usage
 
